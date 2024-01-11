@@ -1,0 +1,69 @@
+import numpy as np
+import pandas as pd
+
+
+per = [98,76.37,55.55,69,88]
+fr = np.array(per)
+print(fr.dtype)
+print("########################################")
+# s=pd.Series([1,2,3,4,5],index=['a','b','c','d','e'])
+# print(s['c'])
+# import pandas as pd
+#
+# df = pd.Series(['1','2'])
+#
+# df
+
+arr=np.array([[2,7,10],[3,4,5]])
+# print(arr)
+slice=arr[:2,0:1]
+slic2=arr[:2,0:2]
+print(slic2)
+print(slice)
+
+
+from numpy import random
+dataset =np.array(['pau','jac','vince','pau','miky','jac','pau'])
+new = (dataset=='pau')|(dataset=='jac')
+print(new)
+
+
+
+
+
+
+
+for var in "Doselect":
+    if var == "l":
+        break
+    print(var,end =" ")
+    # print(var)
+######################################
+# print("test")
+######################################
+print("\n")
+a=[1,2,3]
+b=[4,5,6]
+a.extend(b)
+print(a)
+
+thislist = ["apple", "banana", "cherry"]
+tropical = ["mango", "pineapple", "papaya"]
+thislist.extend(tropical)
+print(thislist)
+########################################
+lis=[4,6,21,5,25,1,7]
+print(lis.pop(4))
+print(lis)
+
+print("++++++++++++++++++++++while+++++++++++++++++")
+
+
+count =0
+while(True):
+    if count % 4 == False:
+        print(count,end = ",")
+    if (count>15):
+        break;
+    count+=1
+
