@@ -1,0 +1,61 @@
+
+# Import SparkSession
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import explode
+from pyspark.sql import SQLContext
+
+from pyspark.sql.functions import col,sum,map_concat,map_values,StructType,struct,to_json,when,lit
+# import pandas as pd,
+import pyspark.sql.functions as F
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType, BooleanType, ArrayType, LongType, \
+    DoubleType
+
+from pyspark import SparkContext
+from pyspark.sql import SQLContext
+sc = SparkContext('local', 'Spark SQL')
+
+
+sqlc = SQLContext(sc)
+
+
+
+from pyspark.sql.functions import posexplode
+
+# Create SparkSession
+spark = SparkSession.builder \
+      .master("local[1]") \
+      .appName("SparkByExamples.com") \
+      .getOrCreate()
+
+
+
+data_customer = spark.read.json('test4.json')
+# data_customer.show()
+data_frame = spark.read.json('order.json')
+
+data_frame.registerTempTable('order_curated_temp')
+# data_frame.show()
+print("tesintg",data_frame)
+lis = ['4829451780280','4829451780234']
+order_id_athena = "','".join(str(i) for i in lis)
+# print("id",order_id_athena)
+# df1 = sqlc.sql("select created_at ,order_id from order_cusrated_temp where order_id = col('last_order_id') and created_at is not null;")
+df1 = sqlc.sql("select created_at,order_id from order_curated_temp where order_id in ('" + order_id_athena + "') and financial_status" +'!='+ "'void'")
+df2 = df1.withColumnRenamed('created_at','last_order_date'),
+df22= df1.select('')
+# df2.show()
+phone = data_customer['phone']
+
+df5 = sqlc.sql("select distinct(count(order_id)) from order_curated_temp where email" + '=' + phone)
+df5.show()
+# df2.show()
+df_final = data_customer.join(df1,data_customer.last_order_id == df1.order_id).drop('order_id')
+
+
+hashed_email =str(data_customer['email'])
+domain=str(data_customer['created_at'])
+print("type(domain)",type(domain))
+df2 = sqlc.sql("select distinct(count(order_id),email from order_curated_temp where domain" + "=" + domain + " and " + "customer.hashed_email"+ "=" + hashed_email+";")
+# df45 = sqlc.sql("select distinct(count(order_id),email from order_curated_temp where domain" + '"="' + domain)
+df_final.show()
+
